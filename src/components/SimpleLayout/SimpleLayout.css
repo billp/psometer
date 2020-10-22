@@ -1,0 +1,23 @@
+body {
+    background-color: #005F40;
+    font-family: 'OpenSans-Light';
+    color: #dadada;
+}
+
+.layout-container {
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.logo {
+    text-align: left;
+}
+
+#header {
+    padding-top: 1.5em;
+}
+
+#content {
+    margin-top: 2em;
+}

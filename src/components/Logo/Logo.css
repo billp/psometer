@@ -1,0 +1,35 @@
+.container {
+    white-space: nowrap;
+    width: 258px;
+}
+
+.container .main div {
+    display: inline;
+}
+
+.container .small {
+    text-align: right;
+    position: relative;
+    top: -0.2em;
+    font-family: 'OpenSans-Light';
+    font-size: 0.8em;
+}
+
+.logo-ps {
+    font-size: 3.9em;
+    font-family: 'Roboto-Thin';
+}
+
+.logo-icon {
+    fill: #dadada;
+    position: relative;
+    top: 0.2em;
+    left: 0.3em;
+}
+
+.logo-meter {
+    font-size: 3em;
+    padding-left: 0.19em;
+    font-weight: 100;
+    font-family: 'Roboto-Thin';
+}
