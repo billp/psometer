@@ -8,7 +8,7 @@ export class SimpleLayout extends React.Component {
         return (
             <div class="layout-container">
                 <div id="header">
-                    <div class="logo"><Logo /></div>
+                    <Logo />
                 </div>
                 <div id="content">
                     {this.props.children}
