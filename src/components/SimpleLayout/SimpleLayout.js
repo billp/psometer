@@ -2,7 +2,6 @@ import './SimpleLayout.css';
 import React from 'react';
 import { Logo } from '../Logo/Logo';
 
-
 export class SimpleLayout extends React.Component {
     render() {
         return (

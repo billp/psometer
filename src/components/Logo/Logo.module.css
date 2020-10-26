@@ -15,21 +15,21 @@
     font-size: 0.8em;
 }
 
-.logo-ps {
+.ps {
     font-size: 3.9em;
     font-family: 'Roboto-Thin';
 }
 
-.logo-icon {
+.icon {
     fill: #dadada;
     position: relative;
-    top: 0.2em;
-    left: 0.3em;
+    top: 0.5vh;
+    left: 0.6vh;
 }
 
-.logo-meter {
+.meter {
     font-size: 3em;
-    padding-left: 0.19em;
+    padding-left: 0.9vh;
     font-weight: 100;
     font-family: 'Roboto-Thin';
 }
