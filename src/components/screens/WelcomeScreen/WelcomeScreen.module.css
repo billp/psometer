@@ -1,0 +1,16 @@
+.form {
+    width: 40%;
+    margin: 0 auto;
+    margin-top: 5vh;
+}
+
+.welcome-text {
+    margin-top: 5vh;
+}
+
+.name-input-text {
+    margin-top: 5vh;
+}
+.fall-icon {
+    fill: #dadada;
+}
