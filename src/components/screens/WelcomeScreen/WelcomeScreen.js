@@ -17,7 +17,7 @@ export class WelcomeScreen extends React.Component {
                 <form class={styles.form} onSubmit={e => e.preventDefault()}>
                     <TextField name="name" label="Όνομα" />
                     <div class={styles['submit-button']}>
-                        <AnimatedButton>Συνέχεια</AnimatedButton>
+                        <AnimatedButton>Συνέχεια →</AnimatedButton>
                     </div>
                 </form>
             </SimpleLayout>
