@@ -1,7 +1,7 @@
 import * as React from "react";
-import './InitialScreenNextButton.scss'
+import './AnimatedButton.scss'
 
-export class InitialScreenNextButton extends React.Component {
+export class AnimatedButton extends React.Component {
     render() {
         return (
             <span className="initial-next-button-wrapper" onClick={this.props.onClick}>
