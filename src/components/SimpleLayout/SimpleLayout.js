@@ -5,7 +5,7 @@ import { Logo } from '../Logo/Logo';
 export class SimpleLayout extends React.Component {
     render() {
         return (
-            <div class="layout-container">
+            <div className="layout-container">
                 <div id="header">
                     <Logo />
                 </div>

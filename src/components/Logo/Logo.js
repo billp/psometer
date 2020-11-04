@@ -5,15 +5,15 @@ import styles from './Logo.module.css';
 export class Logo extends React.Component {
     render() {
         return (
-            <div class={styles.container}>
-                <div class={styles.main}>
-                    <div class={styles.ps}>PS</div>
-                    <div class={styles.icon}>
+            <div className={styles.container}>
+                <div className={styles.main}>
+                    <div className={styles.ps}>PS</div>
+                    <div className={styles.icon}>
                         <LogoIcon width="50px" height="50px" />
                     </div>
-                    <div class={styles.meter}>μετρο</div>
+                    <div className={styles.meter}>μετρο</div>
                 </div>
-                <div class={styles.small}>
+                <div className={styles.small}>
                     Production support countdown timer
                 </div>
             </div>

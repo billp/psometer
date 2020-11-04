@@ -1,20 +1,15 @@
 import { createStore, applyMiddleware } from 'redux'
 import { persistStore, persistReducer } from 'redux-persist'
-import { combineForms } from 'react-redux-form'
-import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
-
-const user = {
-    name: '',
-    start_date: null,
-    end_date: null
-}
-
+import storage from 'redux-persist/lib/storage'
+import hardSet from 'redux-persist/lib/stateReconciler/hardSet'
+import mainReducer from './reducers'
 const persistConfig = {
-    key: 'root',
+    key: 'root2',
     storage,
+    hardSet
 }
 
-const persistedReducer = persistReducer(persistConfig, combineForms({ user }))
+const persistedReducer = persistReducer(persistConfig, mainReducer)
 
 export default () => {
   let store = createStore(persistedReducer)

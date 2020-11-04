@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import { WelcomeScreen } from './components/screens/WelcomeScreen/WelcomeScreen';
+import WelcomeScreen from './components/screens/WelcomeScreen/WelcomeScreen';
 import {
     BrowserRouter as Router,
     Switch,
