@@ -1,0 +1,43 @@
+$progress-view-height: 10px;
+
+.progressview-wrapper {
+  font-family: Manrope, serif;
+  width: 100%;
+  text-align: left;
+
+  .progressview-label {
+    color: #EDEDED;
+    position: relative;
+    top: -8px;
+
+  }
+
+  .progressview {
+    background: #EDEDED;
+    z-index: 200;
+    left: 0;
+    width: 0;
+    height: $progress-view-height;
+    position: relative;
+  }
+
+  .progressview-bg {
+    z-index: 100;
+    background: #163D26;
+    height: $progress-view-height;
+    width: 100%;
+    position: relative;
+    top: -$progress-view-height;
+  }
+
+
+  @keyframes fill-progress {
+    from {
+      left: 0;
+    }
+    to {
+      left: 20px;
+    }
+  }
+
+}
