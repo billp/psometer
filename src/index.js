@@ -1,17 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import { WelcomeScreen } from './components/screens/WelcomeScreen/WelcomeScreen';
+import App from './app';
 
-class PSOmeter extends React.Component {
-    render() {
-        return (
-            <WelcomeScreen />
-        );
-    }
-}
-  
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react'
+import configureStore from './configureStore';
+
+const { store, persistor } = configureStore()
+
 ReactDOM.render(
-    <PSOmeter />,
+    <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+            <App />
+        </PersistGate>
+    </Provider>,
     document.getElementById('root')
 );
