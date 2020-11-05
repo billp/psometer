@@ -29,7 +29,7 @@ export class ProgressView extends React.Component {
      */
     calibrateLabelPosition(label) {
         // Padding from right for the label, value in px
-        const LABEL_PADDING_RIGHT = 10;
+        const LABEL_PADDING_RIGHT = 0;
 
         const left = label.offsetLeft - label.parentElement.offsetLeft - label.offsetWidth - LABEL_PADDING_RIGHT;
         label.style.left = (left < 0 ? 0 : left) + 'px';
@@ -37,11 +37,11 @@ export class ProgressView extends React.Component {
 
     loopAnimation(currentProgress, progressView, label) {
         // Min and max interval will create a slow down effect
-        const MIN_INTERVAL = 10;
-        const MAX_INTERVAL = 40;
+        const MIN_INTERVAL = 0;
+        const MAX_INTERVAL = 0;
 
         // Progress step for each loop
-        const STEP = 0.53;
+        const STEP = 0.35;
         // How frequent the should update the label
         const UPDATE_LABEL_STEP = 1.5;
 
@@ -81,7 +81,7 @@ export class ProgressView extends React.Component {
     componentDidMount() {
         const progressView = ReactDOM.findDOMNode(this).getElementsByClassName('progressview')[0];
         const label = ReactDOM.findDOMNode(this).getElementsByClassName('progressview-label')[0];
-        const START_DELAY = 500;
+        const START_DELAY = 0;
 
         setTimeout(() => {
             this.loopAnimation(0, progressView, label)
