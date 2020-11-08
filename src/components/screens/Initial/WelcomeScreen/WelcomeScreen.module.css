@@ -1,15 +1,18 @@
 .form {
-    width: 40%;
+    width: 300px;
     margin: 0 auto;
     margin-top: 5vh;
+    font-family: Manrope, serif;
 }
 
 .welcome-text {
     margin-top: 5vh;
+    font-family: Manrope, serif;
 }
 
 .name-input-text {
     margin-top: 5vh;
+    font-style: italic;
 }
 .fall-icon {
     fill: #dadada;

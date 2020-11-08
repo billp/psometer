@@ -2,7 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import { connect } from 'react-redux';
-import WelcomeScreen from './components/screens/WelcomeScreen/WelcomeScreen';
+import WelcomeScreen from './components/screens/Initial/WelcomeScreen/WelcomeScreen';
+import SetParameters from './components/screens/Initial/SetParameters/SetParameters';
+
 import {
     BrowserRouter as Router,
     Switch,
@@ -19,7 +21,7 @@ class PSOmeter extends React.Component {
                         <WelcomeScreen />
                     </Route>
                     <Route path="/init/step2">
-                        <WelcomeScreen />
+                        <SetParameters />
                     </Route>
                     <Route path="/">
                         {this.props.configuration.initialSetupCompleted ? 

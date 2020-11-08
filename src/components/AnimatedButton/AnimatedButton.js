@@ -4,7 +4,9 @@ import './AnimatedButton.scss'
 export class AnimatedButton extends React.Component {
     render() {
         return (
-            <span className="initial-next-button-wrapper" onClick={this.props.onClick}>
+            <span className={"initial-next-button-wrapper" + 
+                              (this.props.className ? " " + this.props.className : "")} 
+                  onClick={this.props.onClick}>
                 <button>{this.props.children}</button>
                 <span className="initial-next-button-bg1"/>
                 <span className="initial-next-button-bg2"/>

@@ -107,6 +107,8 @@ export class CountdownView extends React.Component {
         setInterval(function () {
             that.updateDate()
         }, 1000)
+        
+        that.updateDate()
     }
 
     render() {

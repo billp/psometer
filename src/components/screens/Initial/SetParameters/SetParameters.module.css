@@ -1,0 +1,24 @@
+.form {
+    width: 350px;
+    margin: 0 auto;
+    margin-top: 5vh;
+    font-family: Manrope, serif;
+}
+
+.welcome-text {
+    margin-top:6vh;
+    font-family: Manrope, serif;
+}
+
+.settings-icon {
+    margin-top: 30px;
+    fill: #dadada;
+}
+
+.animated-button-left, .animated-button-right {
+    margin-top: 60px;
+}
+
+.animated-button-right {
+  margin-left: 10px;
+}
