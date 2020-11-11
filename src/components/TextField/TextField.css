@@ -23,6 +23,17 @@
     left: -1px;
 }
 
+.textfield input::placeholder {
+  font: 'Manrope';
+  font-size: 0.9em;
+  color: transparent;
+  transition:all 0.3s ease-out;
+}
+
+.textfield input:focus::-webkit-input-placeholder {
+  color: #dadada;    
+}
+
 .textfield label {
     bottom: 0px;
     color: #000;
@@ -55,12 +66,12 @@
 }
 
 .textfield input:focus + .label-name .content-name, 
-.textfield input:valid + .label-name .content-name {
+.textfield input[value]:not([value=""]) + .label-name .content-name {
     transform: translateY(-80%);
     font-size: 1.2em;
 }
 
 .textfield input:focus + .label-name::after, 
-.textfield input:valid + .label-name::after {
+.textfield input[value]:not([value=""]) + .label-name::after {
     transform: translateX(0%);
 }
