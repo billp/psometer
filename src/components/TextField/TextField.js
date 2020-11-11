@@ -9,6 +9,7 @@ export class TextField extends React.Component {
                   onChange={this.props.onChange} 
                   name={this.props.name} 
                   value={this.props.value}
+                  onClick={this.props.onClick}
                   autoComplete="off" required />
                 <label htmlFor={this.props.name} class="label-name">
                     <span class="content-name">{this.props.label}</span>

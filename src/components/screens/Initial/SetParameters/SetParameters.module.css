@@ -22,3 +22,12 @@
 .animated-button-right {
   margin-left: 10px;
 }
+
+.date-picker {
+  width: 100%;
+}
+
+.calendar {
+  z-index: 999!important;
+  display: none;
+}
