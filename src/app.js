@@ -1,9 +1,10 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import { connect } from 'react-redux';
-import WelcomeScreen from './components/screens/Initial/WelcomeScreen/WelcomeScreen';
-import SetParameters from './components/screens/Initial/SetParameters/SetParameters';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import './index.css'
+import { connect } from 'react-redux'
+import WelcomeScreen from './components/screens/Initial/WelcomeScreen/WelcomeScreen'
+import SetParameters from './components/screens/Initial/SetParameters/SetParameters'
+import CountdownScreen from './components/screens/CountdownScreen/CountdownScreen'
 
 import {
     BrowserRouter as Router,
@@ -25,7 +26,7 @@ class PSOmeter extends React.Component {
                     </Route>
                     <Route path="/">
                         {this.props.configuration.initialSetupCompleted ? 
-                          <Redirect to="/dashboard" /> : 
+                          <CountdownScreen /> : 
                           <Redirect to="/init/step1" />}
                     </Route>
                 </Switch>

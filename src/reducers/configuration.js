@@ -7,7 +7,7 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
       case UPDATE_CONFIGURATION_INITIAL_SETUP_COMPLETED:
-        return { ...state, name: action.initialSetupCompleted }
+        return { ...state, initialSetupCompleted: action.initialSetupCompleted }
       default:
         return state
   }

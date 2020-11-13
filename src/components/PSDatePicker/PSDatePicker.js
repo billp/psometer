@@ -14,6 +14,7 @@ export class PSDatePicker extends React.Component {
       <DatePicker
         selected={this.props.value}
         onChange={this.props.onChange}
+        dateFormat="dd/MM/yyyy"
         wrapperClassName={styles['date-picker']}
         calendarClassName={styles.calendar}
         onCalendarOpen={this.handleOpen.bind(this)}

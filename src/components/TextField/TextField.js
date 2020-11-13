@@ -19,11 +19,12 @@ export class TextField extends React.Component {
                   name={this.props.name} 
                   value={this.props.value}
                   onClick={this.props.onClick}
-                  readOnly={this.props.isReadOnly}
+                  onKeyPress={this.handleKeyPress.bind(this)}
                   ref={this.textFieldRef}
                   onBlur={this.handleBlur.bind(this)}
                   placeholder={this.props.ph}
-                  autoComplete="off" required />
+                  autoComplete="off" 
+                  required />
                 <label htmlFor={this.props.name} class="label-name">
                     <span class="content-name">{this.props.label}</span>
                 </label>
@@ -36,4 +37,12 @@ export class TextField extends React.Component {
         this.textFieldRef.current.focus()
       }
     }
+
+    handleKeyPress(e) {
+      if (this.props.isReadOnly) {
+        e.preventDefault()
+      }
+      return true
+    }
+
 } 
