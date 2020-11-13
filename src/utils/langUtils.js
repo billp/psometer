@@ -1,7 +1,8 @@
 import _ from 'lodash'
 
 function isVowel(char) {
-  return /[αάεέηήιίϊοόυύϋωώ]/.test(char)
+  const vowels = _.split("αάεέηήιίϊοόυύϋωώ", "")
+  return _.includes(vowels, char)
 }
 
 export function convertName(name = '') {
@@ -11,7 +12,7 @@ export function convertName(name = '') {
                       .takeRight(3)
                       .dropRight()
                       .value()
-    if (isVowel(_.last(lastChars)) && isVowel(_.last(lastChars))) {
+    if (isVowel(_.last(lastChars)) && isVowel(lastChars[lastChars.length-2])) {
       lastChars = _.chain(lastChars)
                     .dropRight()
                     .concat(['ε'])

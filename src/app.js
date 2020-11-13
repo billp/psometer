@@ -24,6 +24,9 @@ class PSOmeter extends React.Component {
                     <Route path="/init/step2">
                         <SetParameters />
                     </Route>
+                    <Route path="/settings">
+                        <SetParameters showAll={true} />
+                    </Route>
                     <Route path="/">
                         {this.props.configuration.initialSetupCompleted ? 
                           <CountdownScreen /> : 

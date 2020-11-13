@@ -16,7 +16,8 @@ export class TextField extends React.Component {
             <div class="textfield">
                 <input type="text" 
                   onChange={this.props.onChange} 
-                  name={this.props.name} 
+                  name={this.props.name}
+                  id={this.props.name}
                   value={this.props.value}
                   onClick={this.props.onClick}
                   onKeyPress={this.handleKeyPress.bind(this)}

@@ -4,19 +4,25 @@ import { AnimatedButton } from '../../../AnimatedButton/AnimatedButton'
 import styles from './SetParameters.module.css'
 import { ReactComponent as TopIcon } from '../../../../images/settings-icon.svg'
 import { connect } from 'react-redux'
-import { updateCountdownParams, updateConfigurationInitialSetupCompleted } from '../../../../actions'
+import { updateCountdownParams, 
+         updateConfigurationInitialSetupCompleted, 
+         updateName, 
+         clearAllSettings } from '../../../../actions'
 import { withRouter } from "react-router-dom"
 import { compose } from 'redux'
 import { PSDatePicker } from '../../../PSDatePicker/PSDatePicker'
 import { Redirect } from 'react-router-dom'
 import { convertName } from '../../../../utils/langUtils'
+import { TextField } from '../../../TextField/TextField'
+import { getPersistor } from 'redux-persist'
 
 class SetParameters extends React.Component {
     state = {
         start_date: null,
-        end_date: null
+        end_date: null,
+        name: null
     }
-
+    
     render() {
       if (this.props.user.name == undefined) {
         return <Redirect to="/init/step1" />
@@ -24,8 +30,22 @@ class SetParameters extends React.Component {
       return (
           <SimpleLayout>
               <TopIcon class={styles['settings-icon']} width="150px" height="150px" />
-              <div class={styles['welcome-text']}>Γεια σου {convertName(this.state.name)}, θα χρειαστώ κάποιες πληροφορίες για να setάρω το PSΌμετρό σου.</div>
-              <form className={styles.form} onSubmit={this.handleSubmit.bind(this)}>
+              <div class={styles['welcome-text']}>
+                { this.props.showAll ?
+                   <div className={styles['header']}>Ρυθμίσεις</div> :
+                   "Γεια σου "+ convertName(this.props.user.name) + ", θα χρειαστώ κάποιες πληροφορίες για να setάρω το PSΌμετρό σου."  }
+              </div>
+              <form 
+                className={styles.form} 
+                >
+                {this.props.showAll ?
+                  <TextField
+                      name="name" 
+                      label="Όνομα"
+                      value={this.state.name}
+                      onChange={e => this.setState({name: e.target.value})}
+                  /> : ''
+                }
                 <PSDatePicker 
                   value={Date.parse(this.state.start_date)}
                   onChange={date => this.setState({ start_date: date })}
@@ -38,16 +58,53 @@ class SetParameters extends React.Component {
                   label="Ημερομηνία λήξης Production Support"
                   name="end-date" 
                 />
-                <div>
-                  <AnimatedButton 
-                    className={styles['animated-button-left']}
-                    onClick={this.props.history.goBack}>← Πίσω</AnimatedButton>
-                  <AnimatedButton 
-                    className={styles['animated-button-right']}>Συνέχεια →</AnimatedButton>
-                </div>
+                { this.props.showAll ? 
+                  this.allParamsButtons() : 
+                  this.initParamsButtons() }
               </form>
           </SimpleLayout>
         )
+    }
+
+    allParamsButtons() {
+      return (
+        <div>
+          <AnimatedButton 
+            className={styles['animated-button-left']}
+            onClick={this.removeAllSettings.bind(this)}>Διαγραφή ρυθμίσεων</AnimatedButton>
+          <AnimatedButton 
+            className={styles['animated-button-right']}
+            onClick={this.saveAll.bind(this)}>Αποθήκευση</AnimatedButton>
+        </div>
+      )
+    }
+
+    initParamsButtons() {
+      return (
+        <div>
+          <AnimatedButton 
+            className={styles['animated-button-left']}
+            onClick={this.props.history.goBack}>← Πίσω</AnimatedButton>
+          <AnimatedButton 
+            className={styles['animated-button-right']}
+            onClick={this.saveAll.bind(this)}>Συνέχεια →</AnimatedButton>
+        </div>
+      )
+    }
+
+    removeAllSettings(e) {
+      e.preventDefault()
+      if (window.confirm(convertName(this.props.user.name) + ' έισαι σίγουρος/η ότι θέλεις να διαγράψεις όλες τις ρυθμίσεις;')) {
+        this.props.clearAllSettings()
+      }
+    }
+
+    saveAll(e) {
+      e.preventDefault()
+      this.props.updateCountdownParams(this.state.start_date, this.state.end_date)
+      this.props.updateConfigurationInitialSetupCompleted(true)
+      this.props.updateName(this.state.name)
+      this.props.history.push("/");
     }
 
     componentDidMount() {
@@ -57,17 +114,9 @@ class SetParameters extends React.Component {
         end_date: this.props.parameters.end_date
       })
     }
-
-    handleSubmit(e) {
-        e.preventDefault()
-        this.props.updateCountdownParams(this.state.start_date, this.state.end_date)
-        this.props.updateConfigurationInitialSetupCompleted(true)
-        this.props.history.push("/");
-    }
 }
 
 const mapStateToProps = state => {
-  console.log(state)
     return {
         user: state.user,
         parameters: state.parameters
@@ -77,7 +126,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     updateCountdownParams: (start_date, end_date) => { dispatch(updateCountdownParams(start_date, end_date)) },
-    updateConfigurationInitialSetupCompleted: (value) => { dispatch(updateConfigurationInitialSetupCompleted(value)) }
+    updateConfigurationInitialSetupCompleted: (value) => { dispatch(updateConfigurationInitialSetupCompleted(value)) },
+    updateName: (value) => { dispatch(updateName(value)) },
+    clearAllSettings: () => { dispatch(clearAllSettings()) }
   }
 }
   

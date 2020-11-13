@@ -7,7 +7,7 @@ export class AnimatedButton extends React.Component {
             <span className={"initial-next-button-wrapper" + 
                               (this.props.className ? " " + this.props.className : "")} 
                   onClick={this.props.onClick}>
-                <button>{this.props.children}</button>
+                <button type="submit">{this.props.children}</button>
                 <span className="initial-next-button-bg1"/>
                 <span className="initial-next-button-bg2"/>
             </span>
