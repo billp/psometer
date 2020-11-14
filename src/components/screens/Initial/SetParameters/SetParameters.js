@@ -7,7 +7,8 @@ import { connect } from 'react-redux'
 import { updateCountdownParams, 
          updateConfigurationInitialSetupCompleted, 
          updateName, 
-         clearAllSettings } from '../../../../actions'
+         clearAllSettings,
+         clearAllValidationErrors } from '../../../../actions'
 import { withRouter } from "react-router-dom"
 import { compose } from 'redux'
 import { PSDatePicker } from '../../../PSDatePicker/PSDatePicker'
@@ -124,7 +125,7 @@ const mapStateToProps = state => {
         parameters: state.parameters
     }
 }
- 
+
 const mapDispatchToProps = dispatch => {
   return {
     updateCountdownParams: (start_date, end_date) => { dispatch(updateCountdownParams(start_date, end_date)) },
@@ -133,7 +134,7 @@ const mapDispatchToProps = dispatch => {
     clearAllSettings: () => { dispatch(clearAllSettings()) }
   }
 }
-  
+
 export default compose(
   withRouter,
   connect(mapStateToProps, mapDispatchToProps)

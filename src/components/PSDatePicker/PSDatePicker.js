@@ -19,15 +19,16 @@ export class PSDatePicker extends React.Component {
         calendarClassName={styles.calendar}
         onCalendarOpen={this.handleOpen.bind(this)}
         onCalendarClose={this.handleClose.bind(this)}
+        name={this.props.name}
         customInput={
-        <TextField 
-          name={this.props.name}
-          label={this.props.label}
-          value={this.props.value}
-          isFocused={this.state.isFocused}
-          ph="Επίλεξε μία ημερομηνία"
-          isReadOnly
-        />}
+          <TextField 
+            label={this.props.label}
+            value={this.props.value}
+            isFocused={this.state.isFocused}
+            ph="Επίλεξε μία ημερομηνία"
+            isReadOnly
+          />
+        }
       />
     )
   }

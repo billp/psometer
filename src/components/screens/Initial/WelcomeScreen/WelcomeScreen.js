@@ -6,12 +6,15 @@ import styles from './WelcomeScreen.module.css';
 import { ReactComponent as TopIcon } from '../../../../images/fall-icon.svg';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { updateName } from '../../../../actions'
+import { updateName, validateFields } from '../../../../actions'
 import { withRouter } from "react-router-dom";
+import { Form } from '../../../Form/Form'
+import _ from 'lodash';
 
 class WelcomeScreen extends React.Component {
     state = {
-        name: null
+        name: null,
+        shouldSubmit: false
     }
 
     render() {
@@ -21,17 +24,20 @@ class WelcomeScreen extends React.Component {
               <div class={styles['welcome-text']}>Καλωσήρθες στο PSόμετρο, τον μοναδικό σου σύμμαχο σε αυτές τις δύσκολες ώρες του production support. 
                   Να θυμάσαι ότι επιστρέφοντας από αυτό το ταξίδι, δεν θα είσαι ο ίδιος/α που ήσουν.</div>
               <div class={styles['name-input-text']}>Αν είσαι έτοιμος/η, πληκτρολόγησε το όνομά σου και πάτησε το κουμπί "συνέχεια".</div>
-              <form className={styles.form} onSubmit={this.handleSubmit.bind(this)}>
+              <Form className={styles.form} 
+                onSubmit={this.handleSubmit.bind(this)}>
                   <TextField
                       name="name" 
                       label="Όνομα"
                       value={this.state.name}
-                      onChange={e => this.setState({name: e.target.value})}
+                      onChange={e => {
+                        this.setState({name: e.target.value})
+                      }}
                   />
                   <div class={styles['submit-button']}>
                       <AnimatedButton>Συνέχεια →</AnimatedButton>
                   </div>
-              </form>
+              </Form>
           </SimpleLayout>
       )
     }
@@ -44,20 +50,31 @@ class WelcomeScreen extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault()
-        this.props.updateName(this.state.name)
-        this.props.history.push("/init/step2");
+
+        this.props.validateFields(['name']).then(() => {
+          if (this.isFormValid()) {
+            this.props.updateName(this.state.name)
+            this.props.history.push("/init/step2");  
+          }
+        })
+    }
+
+    isFormValid() {
+      return this.props.validationErrors['name'] == undefined
     }
 }
 
 const mapStateToProps = state => {
     return {
-        user: state.user
+        user: state.user,
+        validationErrors: state.validations.errors
     }
 }
  
 const mapDispatchToProps = dispatch => {
   return {
-    updateName: name => { dispatch(updateName(name)) }
+    updateName: name => { dispatch(updateName(name)) },
+    validateFields: (names, cb) => dispatch(validateFields(names)).then(cb)
   }
 }
   
