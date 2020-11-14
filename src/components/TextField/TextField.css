@@ -75,3 +75,9 @@
 .textfield input[value]:not([value=""]) + .label-name::after {
     transform: translateX(0%);
 }
+
+.error {
+  padding: 2px 0px;
+  text-align: left;
+  color: #e9c46a;
+}

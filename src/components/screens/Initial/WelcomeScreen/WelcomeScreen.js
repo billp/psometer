@@ -1,6 +1,6 @@
 import React from 'react';
 import { SimpleLayout } from '../../../SimpleLayout/SimpleLayout';
-import { TextField } from '../../../TextField/TextField';
+import TextField from '../../../TextField/TextField';
 import { AnimatedButton } from '../../../AnimatedButton/AnimatedButton';
 import styles from './WelcomeScreen.module.css';
 import { ReactComponent as TopIcon } from '../../../../images/fall-icon.svg';
@@ -11,8 +11,7 @@ import { withRouter } from "react-router-dom";
 
 class WelcomeScreen extends React.Component {
     state = {
-        name: null,
-        redirect: null
+        name: null
     }
 
     render() {

@@ -12,9 +12,8 @@ import { withRouter } from "react-router-dom"
 import { compose } from 'redux'
 import { PSDatePicker } from '../../../PSDatePicker/PSDatePicker'
 import { Redirect } from 'react-router-dom'
-import { convertName } from '../../../../utils/langUtils'
-import { TextField } from '../../../TextField/TextField'
-import { getPersistor } from 'redux-persist'
+import { speakName } from '../../../../utils/langUtils'
+import TextField from '../../../TextField/TextField'
 
 class SetParameters extends React.Component {
     state = {
@@ -29,15 +28,13 @@ class SetParameters extends React.Component {
       }
       return (
           <SimpleLayout>
-              <TopIcon class={styles['settings-icon']} width="150px" height="150px" />
+              <TopIcon className={styles['settings-icon']} width="150px" height="150px" />
               <div class={styles['welcome-text']}>
                 { this.props.showAll ?
                    <div className={styles['header']}>Ρυθμίσεις</div> :
-                   "Γεια σου "+ convertName(this.props.user.name) + ", θα χρειαστώ κάποιες πληροφορίες για να setάρω το PSΌμετρό σου."  }
+                   "Γεια σου "+ speakName(this.props.user.name) + ", θα χρειαστώ κάποιες πληροφορίες για να setάρω το PSΌμετρό σου."  }
               </div>
-              <form 
-                className={styles.form} 
-                >
+              <form className={styles.form}>
                 {this.props.showAll ?
                   <TextField
                       name="name" 
@@ -71,7 +68,7 @@ class SetParameters extends React.Component {
         <div>
           <AnimatedButton 
             className={styles['animated-button-left']}
-            onClick={this.removeAllSettings.bind(this)}>Διαγραφή ρυθμίσεων</AnimatedButton>
+            onClick={this.removeAllSettings.bind(this)}>Διαγραφή δεδομένων</AnimatedButton>
           <AnimatedButton 
             className={styles['animated-button-right']}
             onClick={this.saveAll.bind(this)}>Αποθήκευση</AnimatedButton>
@@ -84,7 +81,7 @@ class SetParameters extends React.Component {
         <div>
           <AnimatedButton 
             className={styles['animated-button-left']}
-            onClick={this.props.history.goBack}>← Πίσω</AnimatedButton>
+            onClick={this.goBack.bind(this)}>← Πίσω</AnimatedButton>
           <AnimatedButton 
             className={styles['animated-button-right']}
             onClick={this.saveAll.bind(this)}>Συνέχεια →</AnimatedButton>
@@ -92,9 +89,14 @@ class SetParameters extends React.Component {
       )
     }
 
+    goBack(e) {
+      e.preventDefault()
+      this.props.history.goBack()
+    }
+
     removeAllSettings(e) {
       e.preventDefault()
-      if (window.confirm(convertName(this.props.user.name) + ' έισαι σίγουρος/η ότι θέλεις να διαγράψεις όλες τις ρυθμίσεις;')) {
+      if (window.confirm(speakName(this.props.user.name) + ' έισαι σίγουρος/η ότι θέλεις να διαγράψεις όλα τα δεδομένα;')) {
         this.props.clearAllSettings()
       }
     }

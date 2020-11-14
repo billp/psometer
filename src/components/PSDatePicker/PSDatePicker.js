@@ -1,5 +1,5 @@
 import React from 'react'
-import { TextField } from '../TextField/TextField'
+import TextField from '../TextField/TextField'
 import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css"
 import styles from './PSDatePicker.module.css'

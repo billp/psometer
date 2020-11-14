@@ -1,7 +1,9 @@
-import React from 'react';
-import './TextField.css';
+import React from 'react'
+import './TextField.css'
+import { connect } from 'react-redux'
+import _ from 'lodash'
 
-export class TextField extends React.Component {
+class TextField extends React.Component {
     constructor(props) {
       super(props);
       this.textFieldRef = React.createRef();
@@ -13,6 +15,7 @@ export class TextField extends React.Component {
 
     render() {
         return (
+          <div>
             <div class="textfield">
                 <input type="text" 
                   onChange={this.props.onChange} 
@@ -24,12 +27,13 @@ export class TextField extends React.Component {
                   ref={this.textFieldRef}
                   onBlur={this.handleBlur.bind(this)}
                   placeholder={this.props.ph}
-                  autoComplete="off" 
-                  required />
+                  autoComplete="off" />
                 <label htmlFor={this.props.name} class="label-name">
                     <span class="content-name">{this.props.label}</span>
                 </label>
             </div>
+            {this.showValidationErrorsIfNeeded()}
+          </div>
         )
     }
 
@@ -46,4 +50,20 @@ export class TextField extends React.Component {
       return true
     }
 
-} 
+    showValidationErrorsIfNeeded() {
+      const errorMessage = _.get(this.props.validationErrors, this.props.name)
+      if (errorMessage) {
+        return (
+          <div className="error">{errorMessage}</div>
+        )
+      }
+    }
+}
+
+const mapStateToProps = state => {
+  return {
+      validationErrors: state.validationErrors
+  }
+}
+
+export default connect(mapStateToProps)(TextField)

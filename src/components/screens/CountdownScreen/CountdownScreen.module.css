@@ -11,8 +11,12 @@
 }
 
 .settings-icon {
-    margin-top: 30px;
     fill: #dadada;
+}
+
+.menu-bar {
+  text-align: right;
+  width: 90%;
 }
 
 .animated-button-left, .animated-button-right {
