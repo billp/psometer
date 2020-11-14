@@ -7,10 +7,14 @@ export class AnimatedButton extends React.Component {
             <span className={"initial-next-button-wrapper" + 
                               (this.props.className ? " " + this.props.className : "")} 
                   onClick={this.props.onClick}>
-                <button type="submit">{this.props.children}</button>
+                <button className={(this.props.isDisabled ? "disabled " : "") + ""} type="submit">{this.props.children}</button>
                 <span className="initial-next-button-bg1"/>
                 <span className="initial-next-button-bg2"/>
             </span>
         )
     }
+}
+
+AnimatedButton.defaultProps = {
+  isDisabled: false,
 }

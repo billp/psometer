@@ -54,7 +54,6 @@ export class ProgressView extends React.Component {
         progressView.style.width = currentProgress + '%';
         label.style.left = currentProgress + '%';
 
-        console.log("Set progress : ", currentProgress, " progressW ,", progressView.style.width);
         // Do not update the label in each step
         if (this.oldProgressStepLabelValue === 0) {
             this.oldProgressStepLabelValue = currentProgress

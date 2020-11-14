@@ -19,10 +19,10 @@ export const updateConfigurationInitialSetupCompleted = initialSetupCompleted =>
 })
 
 // Countdown Params
-export const updateCountdownParams = (start_date, end_date) => ({
+export const updateCountdownParams = (startDate, endDate) => ({
   type: UPDATE_COUNTDOWN_PARAMS,
-  start_date,
-  end_date
+  startDate,
+  endDate
 })
 
 // Clear all settings
@@ -37,7 +37,6 @@ export const setValidationError = (name, error) => ({
   error
 })
 
-// Validations
 export const clearValidationError = (name) => ({
   type: SET_VALIDATION_ERROR,
   name,

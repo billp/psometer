@@ -9,8 +9,8 @@ import { ReactComponent as SettingsIcon } from '../../../images/settings-icon.sv
 
 class CountdownScreen extends React.Component {
     state = {
-        start_date: null,
-        end_date: null
+        startDate: null,
+        endDate: null
     }
 
     render() {
@@ -31,14 +31,14 @@ class CountdownScreen extends React.Component {
     componentDidMount() {
       this.setState({
         name: this.props.user.name,
-        start_date: this.props.parameters.start_date, 
-        end_date: this.props.parameters.end_date
+        startDate: this.props.parameters.startDate, 
+        endDate: this.props.parameters.endDate
       })
     }
 
     handleSubmit(e) {
         e.preventDefault()
-        this.props.updateCountdownParams(this.state.start_date, this.state.end_date)
+        this.props.updateCountdownParams(this.state.startDate, this.state.endDate)
         this.props.updateConfigurationInitialSetupCompleted(true)
         this.props.history.push("/");
     }
@@ -50,7 +50,6 @@ class CountdownScreen extends React.Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state)
     return {
         user: state.user,
         parameters: state.parameters
@@ -59,7 +58,7 @@ const mapStateToProps = state => {
  
 const mapDispatchToProps = dispatch => {
   return {
-    updateCountdownParams: (start_date, end_date) => { dispatch(updateCountdownParams(start_date, end_date)) },
+    updateCountdownParams: (startDate, endDate) => { dispatch(updateCountdownParams(startDate, endDate)) },
     updateConfigurationInitialSetupCompleted: (value) => { dispatch(updateConfigurationInitialSetupCompleted(value)) }
   }
 }

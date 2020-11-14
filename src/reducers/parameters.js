@@ -1,8 +1,8 @@
 import { UPDATE_COUNTDOWN_PARAMS, CLEAR_ALL_SETTINGS } from '../actions'
 
 const initialState = {
-    start_date: null,
-    end_date: null
+    startDate: null,
+    endDate: null
 }
 
 export default (state = initialState, action) => {
@@ -10,8 +10,8 @@ export default (state = initialState, action) => {
       case UPDATE_COUNTDOWN_PARAMS:
         return { 
           ...state, 
-          start_date: action.start_date, 
-          end_date: action.end_date 
+          startDate: action.startDate, 
+          endDate: action.endDate 
         }
       case CLEAR_ALL_SETTINGS:
         return { }

@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { updateName, validateFields } from '../../../../actions'
 import { withRouter } from "react-router-dom";
-import { Form } from '../../../Form/Form'
+import Form from '../../../Form/Form'
 import _ from 'lodash';
 
 class WelcomeScreen extends React.Component {
@@ -35,7 +35,7 @@ class WelcomeScreen extends React.Component {
                       }}
                   />
                   <div class={styles['submit-button']}>
-                      <AnimatedButton>Συνέχεια →</AnimatedButton>
+                      <AnimatedButton isDisabled={!this.isFormValid()}>Συνέχεια →</AnimatedButton>
                   </div>
               </Form>
           </SimpleLayout>
@@ -53,14 +53,15 @@ class WelcomeScreen extends React.Component {
 
         this.props.validateFields(['name']).then(() => {
           if (this.isFormValid()) {
-            this.props.updateName(this.state.name)
-            this.props.history.push("/init/step2");  
+             this.props.updateName(this.state.name)
+             this.props.history.push("/init/step2");  
           }
         })
     }
 
     isFormValid() {
-      return this.props.validationErrors['name'] == undefined
+      return _.keys(this.props.validationErrors).length == 0 &&
+        _.size(this.state.name) > 0
     }
 }
 

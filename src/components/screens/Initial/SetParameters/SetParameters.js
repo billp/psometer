@@ -8,21 +8,24 @@ import { updateCountdownParams,
          updateConfigurationInitialSetupCompleted, 
          updateName, 
          clearAllSettings,
-         clearAllValidationErrors } from '../../../../actions'
+         validateFields } from '../../../../actions'
 import { withRouter } from "react-router-dom"
 import { compose } from 'redux'
-import { PSDatePicker } from '../../../PSDatePicker/PSDatePicker'
+import PSDatePicker from '../../../PSDatePicker/PSDatePicker'
 import { Redirect } from 'react-router-dom'
 import { speakName } from '../../../../utils/langUtils'
+import Form from '../../../Form/Form'
 import TextField from '../../../TextField/TextField'
+import _ from 'lodash'
 
 class SetParameters extends React.Component {
     state = {
-        start_date: null,
-        end_date: null,
-        name: null
+        startDate: null,
+        endDate: null,
+        name: null,
+        dirty: false
     }
-    
+
     render() {
       if (this.props.user.name == undefined) {
         return <Redirect to="/init/step1" />
@@ -33,9 +36,9 @@ class SetParameters extends React.Component {
               <div class={styles['welcome-text']}>
                 { this.props.showAll ?
                    <div className={styles['header']}>Ρυθμίσεις</div> :
-                   "Γεια σου "+ speakName(this.props.user.name) + ", θα χρειαστώ κάποιες πληροφορίες για να setάρω το PSΌμετρό σου."  }
+                   "Γεια σου "+ speakName(this.props.user.name) + ", θα χρειαστώ κάποιες πληροφορίες για να setάρω το PSΟμετρό σου."  }
               </div>
-              <form className={styles.form}>
+              <Form className={styles.form}>
                 {this.props.showAll ?
                   <TextField
                       name="name" 
@@ -45,21 +48,22 @@ class SetParameters extends React.Component {
                   /> : ''
                 }
                 <PSDatePicker 
-                  value={Date.parse(this.state.start_date)}
-                  onChange={date => this.setState({ start_date: date })}
+                  value={Date.parse(this.state.startDate)}
+                  onChange={date => this.setState({ startDate: date })}
                   label="Ημερομηνία έναρξης Production Support"
                   name="start-date" 
                 />
                 <PSDatePicker 
-                  value={Date.parse(this.state.end_date)}
-                  onChange={date => this.setState({ end_date: date })}
+                  value={Date.parse(this.state.endDate)}
+                  onChange={date => this.setState({ endDate: date })}
                   label="Ημερομηνία λήξης Production Support"
-                  name="end-date" 
+                  name="end-date"
+                  customValidation={this.validateEndDate.bind(this)}
                 />
                 { this.props.showAll ? 
                   this.allParamsButtons() : 
                   this.initParamsButtons() }
-              </form>
+              </Form>
           </SimpleLayout>
         )
     }
@@ -72,7 +76,8 @@ class SetParameters extends React.Component {
             onClick={this.removeAllSettings.bind(this)}>Διαγραφή δεδομένων</AnimatedButton>
           <AnimatedButton 
             className={styles['animated-button-right']}
-            onClick={this.saveAll.bind(this)}>Αποθήκευση</AnimatedButton>
+            onClick={this.saveAll.bind(this)}
+            isDisabled={!this.isFormValid()}>Αποθήκευση</AnimatedButton>
         </div>
       )
     }
@@ -85,9 +90,28 @@ class SetParameters extends React.Component {
             onClick={this.goBack.bind(this)}>← Πίσω</AnimatedButton>
           <AnimatedButton 
             className={styles['animated-button-right']}
-            onClick={this.saveAll.bind(this)}>Συνέχεια →</AnimatedButton>
+            onClick={this.saveAll.bind(this)}
+            isDisabled={!this.isFormValid()}>Συνέχεια →</AnimatedButton>
         </div>
       )
+    }
+
+    validateEndDate(value) {
+      const startDate = Date.parse(_.get(this.state, 'startDate', ''))
+      const endDate = Date.parse(_.get(this.state, 'endDate', ''))
+      console.log(startDate)
+      console.log(endDate)
+      if (endDate - startDate <= 0) {
+        return {
+          valid: false,
+          error: 'Η ημ/νία λήξης πρέπει να είναι μεγαλύτερη από την ημ/νία έναρξης'
+        }
+      }
+
+      return {
+        valid: true,
+        error: null
+      }
     }
 
     goBack(e) {
@@ -104,33 +128,46 @@ class SetParameters extends React.Component {
 
     saveAll(e) {
       e.preventDefault()
-      this.props.updateCountdownParams(this.state.start_date, this.state.end_date)
-      this.props.updateConfigurationInitialSetupCompleted(true)
-      this.props.updateName(this.state.name)
-      this.props.history.push("/");
+      this.props.validateFields(['start-date', 'end-date']).then(() => {
+        if (this.isFormValid()) {
+          this.props.updateCountdownParams(this.state.startDate, this.state.endDate)
+          this.props.updateConfigurationInitialSetupCompleted(true)
+          this.props.updateName(this.state.name)    
+          this.props.history.push("/")
+        }
+      })
     }
 
     componentDidMount() {
       this.setState({
         name: this.props.user.name,
-        start_date: this.props.parameters.start_date, 
-        end_date: this.props.parameters.end_date
+        startDate: this.props.parameters.startDate, 
+        endDate: this.props.parameters.endDate
       })
+    }
+
+    isFormValid() {
+      return _.keys(this.props.validationErrors).length == 0 && 
+        !_.isNil(this.state.startDate) && 
+        !_.isNil(this.state.endDate) && 
+        !_.isNil(this.state.name)
     }
 }
 
 const mapStateToProps = state => {
-    return {
-        user: state.user,
-        parameters: state.parameters
-    }
+  return {
+    user: state.user,
+    parameters: state.parameters,
+    validationErrors: state.validations.errors
+  }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    updateCountdownParams: (start_date, end_date) => { dispatch(updateCountdownParams(start_date, end_date)) },
+    updateCountdownParams: (startDate, endDate) => { dispatch(updateCountdownParams(startDate, endDate)) },
     updateConfigurationInitialSetupCompleted: (value) => { dispatch(updateConfigurationInitialSetupCompleted(value)) },
     updateName: (value) => { dispatch(updateName(value)) },
+    validateFields: (names, cb) => dispatch(validateFields(names)).then(cb),
     clearAllSettings: () => { dispatch(clearAllSettings()) }
   }
 }

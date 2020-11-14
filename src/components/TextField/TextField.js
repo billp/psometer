@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import _ from 'lodash'
 import { 
   setValidationError, 
-  clearAllValidationErrors, 
   clearValidationError 
 } from '../../actions'
 
@@ -19,7 +18,7 @@ class TextField extends React.Component {
   }
 
   componentDidMount() {
-    this.props.clearAllValidationErrors()
+    this.props.clearValidationError(this.props.name)
   }
 
   componentDidUpdate(prevProps) {
@@ -44,7 +43,7 @@ class TextField extends React.Component {
               placeholder={this.props.ph}
               autoComplete="off" />
             <label htmlFor={this.props.name} class="label-name">
-                <span class="content-name">{this.props.label}</span>
+                <span class="content-name">{this.props.label} { this.props.isRequired ? '*' : '' }</span>
             </label>
         </div>
         {this.showValidationErrorsIfNeeded()}
@@ -60,14 +59,21 @@ class TextField extends React.Component {
     if (this.textFieldRef.current && this.props.isFocused) {
       this.textFieldRef.current.focus()
     }
-    this.handleOnChange(e)
+
+    if (this.props.validateOnBlur == true) {
+      this.validate(e.target.value)
+    }
   }
 
   handleOnChange(e) {
     if (this.props.onChange) {
       this.props.onChange(e)
     }
-    this.setState({ value: this.props.value }, () => this.validate(e.target.value) )
+    this.setState({ value: this.props.value }, () => {
+      if (e.target.value.length > 0) {
+        this.validate(e.target.value) 
+      }
+    })
   }
 
   validate(value) {
@@ -75,12 +81,14 @@ class TextField extends React.Component {
       return
     }
 
+    const customValidationResult = this.props.customValidation(value)
+
     let fieldValid = true
-    if (_.chain(value)
-          .split('')
-          .isEmpty()
-          .value() == true) {
-      this.props.setValidationError(this.props.name, 'Αυτό το πεδίο είναι υποχρεωτικό')
+    if (this.props.isRequired && _.size(value) == 0) {
+      this.props.setValidationError(this.props.name, this.props.requiredValidationMessage)
+      fieldValid = false
+    } else if (!customValidationResult.valid) {
+      this.props.setValidationError(this.props.name, customValidationResult.error)
       fieldValid = false
     } else {
       this.props.clearValidationError(this.props.name)
@@ -124,9 +132,16 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     setValidationError: (name, error) => { dispatch(setValidationError(name, error)) },
-    clearAllValidationErrors: () => { dispatch(clearAllValidationErrors()) },
     clearValidationError: (name) => { dispatch(clearValidationError(name)) }
   }
 }
+
+TextField.defaultProps = {
+  validateOnBlur: true,
+  isRequired: true,
+  requiredValidationMessage: 'Αυτό το πεδίο είναι υποχρεωτικό',
+  customValidation: () => { return { valid: true, error: null } }
+};
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(TextField)

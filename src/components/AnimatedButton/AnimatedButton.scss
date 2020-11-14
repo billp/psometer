@@ -28,6 +28,10 @@ $animation-duration: 0.3s;
     z-index: -1;
   }
 
+  .disabled {
+    color: rgb(155, 155, 155);
+  }
+
   &:hover {
     .initial-next-button-bg1 {
       top: -$border-size;

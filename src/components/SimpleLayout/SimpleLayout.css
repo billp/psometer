@@ -1,19 +1,25 @@
 body {
-    background-color: #005F40;
-    font-family: 'OpenSans-Light';
-    color: #dadada;
+  background-color: #005F40;
+  font-family: 'OpenSans-Light';
+  color: #dadada;
 }
 
 .layout-container {
-    width: 80%;
-    margin: 0 auto;
-    text-align: center;
+  width: 80%;
+  margin: 0 auto;
+  text-align: center;
 }
 
 #header {
-    padding-top: 1.2vh;
+  padding-top: 1.2vh;
 }
 
 #content {
-    margin-top: 2vh;
+  margin-top: 2vh;
+}
+
+#footer {
+  margin-top: 130px;
+  font-size: 0.6em;
+  color: #999999;
 }
