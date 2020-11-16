@@ -110,15 +110,17 @@ export class CountdownView extends React.Component {
     }
 
     componentDidMount() {
-      window.addEventListener('resize', () => {
-        this.notifyForUpdate()
-      })
+      window.addEventListener('resize', this.notifyForUpdate.bind(this))
 
       setInterval((() => {
         this.notifyForUpdate()
       }).bind(this), 1000)
       
       this.notifyForUpdate()
+    }
+
+    componentWillUnmount() {
+      window.removeEventListener('resize', this.notifyForUpdate.bind(this))
     }
 
     notifyForUpdate() {
