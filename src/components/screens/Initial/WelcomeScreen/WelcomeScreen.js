@@ -60,7 +60,7 @@ class WelcomeScreen extends React.Component {
     }
 
     isFormValid() {
-      return _.keys(this.props.validationErrors).length == 0 &&
+      return _.keys(this.props.validationErrors).length === 0 &&
         _.size(this.state.name) > 0
     }
 }

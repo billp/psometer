@@ -1,12 +1,13 @@
 import * as React from "react";
 import './CountdownView.scss'
+import moment from 'moment'
 
 export class CountdownView extends React.Component {
 
     constructor(props) {
         super(props);
 
-        this.startTime = this.getNowTime();
+        this.startTime = this.getNowTime()/1000 - moment(props.start).unix();
 
         // Init state with empty values
         this.state = {
@@ -98,35 +99,50 @@ export class CountdownView extends React.Component {
      * Update the date based on now time
      */
     updateDate() {
-        let playTime = (this.getNowTime() - this.startTime) / 1000;
-        this.calcDiff(this.props.start + playTime, this.props.end);
+        let playTime = this.getNowTime()/1000 - this.startTime;
+        this.calcDiff(this.startTime + playTime, this.props.end);
+    }
+
+    calculateProgress() {
+      const now = moment().unix()
+      const progress = (now-this.props.start)/(this.props.end-this.props.start)
+      return progress
     }
 
     componentDidMount() {
-        const that = this;
-        setInterval(function () {
-            that.updateDate()
-        }, 1000)
-        
-        that.updateDate()
+      window.addEventListener('resize', () => {
+        this.notifyForUpdate()
+      })
+
+      setInterval((() => {
+        this.notifyForUpdate()
+      }).bind(this), 1000)
+      
+      this.notifyForUpdate()
+    }
+
+    notifyForUpdate() {
+      this.updateDate()
+      this.props.progressUpdate(this.calculateProgress())
     }
 
     render() {
-        let text = '';
-        if (this.state.diff > 0) {
-            text =
-                <span className={'countdown-view'}>
-                    Ελευθέρωση σε {this.state.days} &nbsp;
-                    {this.state.hours} &nbsp;
-                    {this.state.mins} &nbsp;
-                    {this.state.secs} &nbsp;
-                </span>
-        }
+      let text = '';
+      if (this.state.diff > 0) {
+        text =
+          <span className={'countdown-view'}>
+              Ελευθέρωση σε {this.state.days} {this.state.hours} {this.state.mins} {this.state.secs}
+          </span>
+      }
 
-        return (
-            <div>
-                {text}
-            </div>
-        )
+      return (
+        <div className={this.props.className}>
+            {text}
+        </div>
+      )
     }
+}
+
+CountdownView.defaultProps = {
+  progressUpdate: (currentValue) => { return 0.4 }
 }

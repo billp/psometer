@@ -17,6 +17,7 @@ import { speakName } from '../../../../utils/langUtils'
 import Form from '../../../Form/Form'
 import TextField from '../../../TextField/TextField'
 import _ from 'lodash'
+import moment from 'moment'
 
 class SetParameters extends React.Component {
     state = {
@@ -27,7 +28,7 @@ class SetParameters extends React.Component {
     }
 
     render() {
-      if (this.props.user.name == undefined) {
+      if (this.props.user.name === undefined) {
         return <Redirect to="/init/step1" />
       }
       return (
@@ -49,7 +50,11 @@ class SetParameters extends React.Component {
                 }
                 <PSDatePicker 
                   value={Date.parse(this.state.startDate)}
-                  onChange={date => this.setState({ startDate: date })}
+                  onChange={date => this.setState({ startDate: date }, () => { 
+                    if (!_.isNil(this.state.endDate)) {
+                      this.props.validateFields(['end-date'])
+                    }
+                  })}
                   label="Ημερομηνία έναρξης Production Support"
                   name="start-date" 
                 />
@@ -96,11 +101,19 @@ class SetParameters extends React.Component {
       )
     }
 
+
     validateEndDate(value) {
-      const startDate = Date.parse(_.get(this.state, 'startDate', ''))
-      const endDate = Date.parse(_.get(this.state, 'endDate', ''))
-      console.log(startDate)
-      console.log(endDate)
+      const startDate = moment(_.get(this.state, 'startDate', '')).unix()
+      const endDate = moment(_.get(this.state, 'endDate', '')).unix()
+      const now = moment().unix()
+
+      if (endDate < now) {
+        return {
+          valid: false,
+          error: 'Η ημ/νία λήξης πρέπει να είναι μεγαλύτερη από την σημερινή'
+        }
+      }
+
       if (endDate - startDate <= 0) {
         return {
           valid: false,
@@ -147,7 +160,7 @@ class SetParameters extends React.Component {
     }
 
     isFormValid() {
-      return _.keys(this.props.validationErrors).length == 0 && 
+      return _.keys(this.props.validationErrors).length === 0 && 
         !_.isNil(this.state.startDate) && 
         !_.isNil(this.state.endDate) && 
         !_.isNil(this.state.name)

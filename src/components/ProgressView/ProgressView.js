@@ -1,100 +1,46 @@
-import * as React from "react";
+import React, { createRef } from "react";
 import './ProgressView.scss'
-import ReactDOM from 'react-dom';
+import _ from 'lodash'
 
 export class ProgressView extends React.Component {
+  constructor(props) {
+    super(props)
 
-    constructor(props) {
-        super(props);
+    this.progressView = createRef(null)
+    this.progressLabel = createRef(null)
+  }
 
-        const progress = 100 * (props.currentValue - props.minValue) / (props.maxValue - props.minValue);
+  componentDidMount() {
+    console.log(this.progressView)
+  }
 
-        const defaultValueFormatter = (progress) => progress + '%';
-        const valueFormatter = typeof (props.valueFormatter) === 'function' ? props.valueFormatter
-            : defaultValueFormatter;
+  render() {
+    return (
+      <div className={'progressview-wrapper' + (this.props.className ? ' ' + this.props.className : '')}>
+          <span className={'progressview-label'} 
+              ref={this.progressLabel}
+              style={{left: this.translateWidth(this.props.currentValue) + 'px'}}>
+                {this.props.valueFormatter(this.props.currentValue)}
+           </span>
+          <div className={'progressview'} style={{width: this.translateWidth(this.props.currentValue) + 'px'}} />
+          <div className={'progressview-bg'} ref={this.progressView}  />
+      </div>
+    )
+  }
 
-        this.state = {
-            progress: progress,
-            width: progress + '%',
-            left: progress + '%',
-            valueFormatter: valueFormatter
-        };
+  translateWidth(value) {
+    const offsetWidth = _.get(this.progressView, 'current.offsetWidth')
+    return offsetWidth * value
+  }
 
-        // Helper value to keep the step of the label
-        this.oldProgressStepLabelValue = 0
-    }
+  labelWidth() {
+    return _.get(this.progressLabel, 'current.offsetWidth')
+  }
+}
 
-    /**
-     * Calbrate label position based on it's width
-     */
-    calibrateLabelPosition(label) {
-        // Padding from right for the label, value in px
-        const LABEL_PADDING_RIGHT = 0;
-
-        const left = label.offsetLeft - label.parentElement.offsetLeft - label.offsetWidth - LABEL_PADDING_RIGHT;
-        label.style.left = (left < 0 ? 0 : left) + 'px';
-    }
-
-    loopAnimation(currentProgress, progressView, label) {
-        // Min and max interval will create a slow down effect
-        const MIN_INTERVAL = 0;
-        const MAX_INTERVAL = 0;
-
-        // Progress step for each loop
-        const STEP = 0.35;
-        // How frequent the should update the label
-        const UPDATE_LABEL_STEP = 1.5;
-
-        // Check if we need to finish the loop
-        if (currentProgress >= this.state.progress) {
-            label.innerText = this.props.valueFormatter(this.state.progress);
-            return;
-        }
-
-        progressView.style.width = currentProgress + '%';
-        label.style.left = currentProgress + '%';
-
-        // Do not update the label in each step
-        if (this.oldProgressStepLabelValue === 0) {
-            this.oldProgressStepLabelValue = currentProgress
-        } else if (currentProgress - this.oldProgressStepLabelValue > UPDATE_LABEL_STEP) {
-            label.innerText = this.props.valueFormatter(currentProgress);
-            this.oldProgressStepLabelValue = currentProgress;
-        }
-
-        this.calibrateLabelPosition(label);
-
-        currentProgress += STEP;
-        if (currentProgress > this.state.progress) {
-            currentProgress = this.state.progress;
-        }
-
-        const nextInternal = MIN_INTERVAL + (MAX_INTERVAL * (1 - (this.state.progress - currentProgress)
-            / this.state.progress));
-
-        setTimeout(() => {
-            this.loopAnimation(currentProgress, progressView, label)
-        }, nextInternal);
-    }
-
-    componentDidMount() {
-        const progressView = ReactDOM.findDOMNode(this).getElementsByClassName('progressview')[0];
-        const label = ReactDOM.findDOMNode(this).getElementsByClassName('progressview-label')[0];
-        const START_DELAY = 0;
-
-        setTimeout(() => {
-            this.loopAnimation(0, progressView, label)
-        }, START_DELAY);
-
-    }
-
-    render() {
-        return (
-            <div className={'progressview-wrapper'}>
-                <span className={'progressview-label'}>0%</span>
-                <div className={'progressview'}/>
-                <div className={'progressview-bg'}/>
-            </div>
-        )
-    }
+ProgressView.defaultProps = {
+  minValue: 0,
+  maxValue: 100,
+  currentValue: 50,
+  valueFormatter: (progress) => parseInt(progress) + '%'
 }

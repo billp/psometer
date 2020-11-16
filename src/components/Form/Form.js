@@ -23,7 +23,7 @@ class Form extends React.Component {
   }
 
   onKeyDown(e) {
-    if (e.which == 13) {
+    if (e.which === 13) {
       e.preventDefault()
       e.stopPropagation()
     }

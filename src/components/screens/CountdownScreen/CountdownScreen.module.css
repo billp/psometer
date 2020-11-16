@@ -26,3 +26,16 @@
 .animated-button-right {
   margin-left: 10px;
 }
+
+.main {
+  width: 70%;
+  margin: 0 auto;
+}
+
+.progress-view {
+  margin-top: 150px;
+}
+
+.countdown-view {
+  margin-top: 20px;
+}

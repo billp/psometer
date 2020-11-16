@@ -13,7 +13,7 @@ export class SimpleLayout extends React.Component {
           {this.props.children}
         </div>
         <div id="footer">
-          v {process.env.REACT_APP_VERSION}
+          βέρσιο {process.env.REACT_APP_VERSION}
         </div>
       </div>
     )

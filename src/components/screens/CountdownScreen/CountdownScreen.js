@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { SimpleLayout } from '../../SimpleLayout/SimpleLayout'
 import styles from './CountdownScreen.module.css'
 import { connect } from 'react-redux'
@@ -6,47 +6,45 @@ import { updateCountdownParams, updateConfigurationInitialSetupCompleted } from 
 import { withRouter } from "react-router-dom"
 import { compose } from 'redux'
 import { ReactComponent as SettingsIcon } from '../../../images/settings-icon.svg'
+import { CountdownView } from '../../../components/CountdownView/CountdownView'
+import { ProgressView } from '../../../components/ProgressView/ProgressView'
+import moment from 'moment'
 
 class CountdownScreen extends React.Component {
-    state = {
-        startDate: null,
-        endDate: null
-    }
+  state = {
+    progress: 0
+  }
 
-    render() {
-      return (
-          <SimpleLayout>
-              <div className={styles['menu-bar']}>
-                <a href="#" onClick={this.settingsAction.bind(this)}>
-                  <SettingsIcon width="30px" height="30px" className={styles['settings-icon']} />
-                </a>
-              </div>
-              <div className={styles['main']}>
-                {this.props.user.name}
-              </div>
-          </SimpleLayout>
-        )
-    }
+  render() {
+    return (
+        <SimpleLayout>
+            <div className={styles['menu-bar']}>
+              <a href="#settings" onClick={this.settingsAction.bind(this)}>
+                <SettingsIcon width="30px" height="30px" className={styles['settings-icon']} />
+              </a>
+            </div>
+            <div className={styles['main']}>
+              <ProgressView
+                className={styles['progress-view']}
+                minValue={0} 
+                maxValue={1}
+                currentValue={this.state.progress}
+                valueFormatter={(val) => parseInt(val*100) + '%'}
+               />
+              <CountdownView 
+                className={styles['countdown-view']}
+                start={moment(this.props.parameters.startDate).unix()} 
+                end={moment(this.props.parameters.endDate).unix()} 
+                progressUpdate={ progress => this.setState({ progress }) }/>
+            </div>
+        </SimpleLayout>
+      )
+  }
 
-    componentDidMount() {
-      this.setState({
-        name: this.props.user.name,
-        startDate: this.props.parameters.startDate, 
-        endDate: this.props.parameters.endDate
-      })
-    }
-
-    handleSubmit(e) {
-        e.preventDefault()
-        this.props.updateCountdownParams(this.state.startDate, this.state.endDate)
-        this.props.updateConfigurationInitialSetupCompleted(true)
-        this.props.history.push("/");
-    }
-
-    settingsAction(e) {
-      e.preventDefault()
-      this.props.history.push("/settings");
-    }
+  settingsAction(e) {
+    e.preventDefault()
+    this.props.history.push("/settings");
+  }
 }
 
 const mapStateToProps = state => {

@@ -7,7 +7,7 @@ function isVowel(char) {
 
 export function speakName(name = '') {
   let nameComponents = _.split(name, '')
-  if (_.last(nameComponents) == 'ς') {
+  if (_.last(nameComponents) === 'ς') {
     let lastChars = _.chain(nameComponents)
                       .takeRight(3)
                       .dropRight()

@@ -21,15 +21,15 @@ export default (state = initialState, action) => {
             [action.name]: action.error 
           }
         }
-        if (action.error == undefined) {
+        if (action.error === undefined) {
           _.unset(newState.errors, action.name)
         } 
 
         // Remove validation from list
-        newState.validateFields = _.dropWhile(newState.validateFields, (o) => o == action.name)
+        newState.validateFields = _.dropWhile(newState.validateFields, (o) => o === action.name)
 
         return newState
-      case CLEAR_ALL_SETTINGS, CLEAR_ALL_VALIDATION_ERRORS:
+      case CLEAR_ALL_SETTINGS || CLEAR_ALL_VALIDATION_ERRORS:
         return { 
           ...initialState, 
           errors: { } 

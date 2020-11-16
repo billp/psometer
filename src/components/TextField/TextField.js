@@ -22,7 +22,7 @@ class TextField extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (_.indexOf(this.props.validateFields, this.props.name) != -1) {
+    if (_.indexOf(this.props.validateFields, this.props.name) !== -1) {
       this.validate(this.props.value)
     }
   }
@@ -52,7 +52,7 @@ class TextField extends React.Component {
   }
 
   handleBlur(e) {
-    if (this.props.onBlur != undefined) {
+    if (this.props.onBlur !== undefined) {
       this.props.onBlur()
     } 
     
@@ -60,7 +60,7 @@ class TextField extends React.Component {
       this.textFieldRef.current.focus()
     }
 
-    if (this.props.validateOnBlur == true) {
+    if (this.props.validateOnBlur === true) {
       this.validate(e.target.value)
     }
   }
@@ -77,14 +77,14 @@ class TextField extends React.Component {
   }
 
   validate(value) {
-    if (this.props.name == undefined) {
+    if (this.props.name === undefined) {
       return
     }
 
     const customValidationResult = this.props.customValidation(value)
 
     let fieldValid = true
-    if (this.props.isRequired && _.size(value) == 0) {
+    if (this.props.isRequired && _.size(value) === 0) {
       this.props.setValidationError(this.props.name, this.props.requiredValidationMessage)
       fieldValid = false
     } else if (!customValidationResult.valid) {
@@ -118,7 +118,7 @@ class TextField extends React.Component {
   }
 
   isFieldValid() {
-    return this.validationErrorMessage() == undefined
+    return this.validationErrorMessage() === undefined
   }
 }
 
