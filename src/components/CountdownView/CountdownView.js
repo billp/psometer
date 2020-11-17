@@ -133,7 +133,10 @@ export class CountdownView extends React.Component {
       if (this.state.diff > 0) {
         text =
           <span className={'countdown-view'}>
-              Ελευθέρωση σε {this.state.days} {this.state.hours} {this.state.mins} {this.state.secs}
+              Ελευθέρωση σε <span class="days-component">{this.state.days}</span>&nbsp;
+                            <span class="hours-component">{this.state.hours}</span>&nbsp;
+                            <span class="minutes-component">{this.state.mins}</span>&nbsp;
+                            <span class="seconds-component">{this.state.secs}</span>
           </span>
       }
 

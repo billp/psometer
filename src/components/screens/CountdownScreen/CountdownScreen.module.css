@@ -20,7 +20,7 @@
 }
 
 .animated-button-left, .animated-button-right {
-    margin-top: 60px;
+  margin-top: 60px;
 }
 
 .animated-button-right {
@@ -28,14 +28,27 @@
 }
 
 .main {
-  width: 70%;
   margin: 0 auto;
 }
 
 .progress-view {
-  margin-top: 150px;
+  width: 70%;
+  margin: 0 auto;
+  margin-top: 40px;
 }
 
 .countdown-view {
   margin-top: 20px;
+}
+
+.status {
+  font-family: Manrope, serif;
+  width: 60%;
+  min-width: 300px;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+
+.avatar {
+  fill: #dadada
 }
