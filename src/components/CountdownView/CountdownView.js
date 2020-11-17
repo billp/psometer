@@ -112,9 +112,9 @@ export class CountdownView extends React.Component {
     componentDidMount() {
       window.addEventListener('resize', this.notifyForUpdate.bind(this))
 
-      setInterval((() => {
+      setInterval(() => {
         this.notifyForUpdate()
-      }).bind(this), 1000)
+      }, 1000)
       
       this.notifyForUpdate()
     }

@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React from 'react'
 import { SimpleLayout } from '../../SimpleLayout/SimpleLayout'
 import styles from './CountdownScreen.module.css'
 import { connect } from 'react-redux'
@@ -17,11 +17,7 @@ class CountdownScreen extends React.Component {
   state = {
     progress: 0
   }
-
-  constructor(props) {
-    super(props)
-  }
-
+  
   render() {
     return (
         <SimpleLayout>
@@ -33,8 +29,11 @@ class CountdownScreen extends React.Component {
           <div className={styles['main']}>
             <div className={styles['avatar']}>
               {this.currentStatus('icon', 100)}
+              <div className={styles['status']}>
+                {this.currentStatus('status')}
+              </div>
             </div>
-            <div className={styles['status']}>
+            <div className={styles['status-description']}>
               {this.currentStatus('text')}
             </div>
             <div className={styles['progress-view']}>

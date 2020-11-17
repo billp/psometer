@@ -20,6 +20,11 @@
     font-family: 'Roboto-Thin';
 }
 
+a, a:link, a:visited {
+  text-decoration: none;
+  color: #dadada;
+}
+
 .icon {
     fill: #dadada;
     position: relative;

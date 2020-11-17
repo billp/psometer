@@ -1,6 +1,6 @@
 import './SimpleLayout.css';
 import React from 'react';
-import { Logo } from '../Logo/Logo';
+import Logo from '../Logo/Logo';
 
 export class SimpleLayout extends React.Component {
   render() {
@@ -13,7 +13,7 @@ export class SimpleLayout extends React.Component {
           {this.props.children}
         </div>
         <div id="footer">
-          βέρσιο {process.env.REACT_APP_VERSION}
+          v {process.env.REACT_APP_VERSION}
         </div>
       </div>
     )

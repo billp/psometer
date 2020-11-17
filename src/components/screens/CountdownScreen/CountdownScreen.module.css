@@ -34,20 +34,29 @@
 .progress-view {
   width: 70%;
   margin: 0 auto;
-  margin-top: 40px;
+  margin-top: 100px;
 }
 
 .countdown-view {
-  margin-top: 20px;
+  margin-top: 30px;
 }
 
-.status {
+.status-description {
   font-family: Manrope, serif;
   width: 60%;
   min-width: 300px;
   margin: 0 auto;
-  margin-top: 20px;
+  margin-top: 30px;
+  font-size: 1.2em;
 }
+
+.status {
+  font-family: Manrope, serif;
+  margin: 0 auto;
+  margin-top: 10px;
+  font-size: 1.2em;
+}
+
 
 .avatar {
   fill: #dadada

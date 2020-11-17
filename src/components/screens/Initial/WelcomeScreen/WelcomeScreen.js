@@ -21,7 +21,7 @@ class WelcomeScreen extends React.Component {
       return (
           <SimpleLayout>
               <TopIcon class={styles['fall-icon']} width="200px" height="200px" />
-              <div className={styles['welcome-text']}>Καλωσήρθες στο PSόμετρο, τον μοναδικό σου σύμμαχο σε αυτές τις δύσκολες ώρες του production support. 
+              <div className={styles['welcome-text']}>Καλωσήρθες στο PSΟμετρο, τον μοναδικό σου σύμμαχο σε αυτές τις δύσκολες ώρες του production support. 
                   Να θυμάσαι ότι επιστρέφοντας από αυτό το ταξίδι, δεν θα είσαι ο ίδιος/α που ήσουν.</div>
               <div className={styles['name-input-text']}>Αν είσαι έτοιμος/η, πληκτρολόγησε το όνομά σου και πάτησε το κουμπί "συνέχεια".</div>
               <Form className={styles.form} 
