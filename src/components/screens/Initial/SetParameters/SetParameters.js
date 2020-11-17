@@ -51,10 +51,12 @@ class SetParameters extends React.Component {
                 <PSDatePicker 
                   value={Date.parse(this.state.startDate)}
                   onChange={date => this.setState({ startDate: date }, () => { 
-                    if (!_.isNil(this.state.endDate)) {
-                      this.props.validateFields(['end-date'])
-                    }
-                  })}
+                      if (!_.isNil(this.state.endDate)) {
+                        this.props.validateFields(['end-date'])
+                      }
+                    })
+                  }
+                  customValidation={this.validateStartDate.bind(this)}
                   label="Ημερομηνία έναρξης Production Support"
                   name="start-date" 
                 />
@@ -101,6 +103,21 @@ class SetParameters extends React.Component {
       )
     }
 
+    validateStartDate(value) {
+      const startDate = moment(_.get(this.state, 'startDate', '')).unix()
+      const now = moment().unix()
+      if (startDate > now) {
+        return {
+          valid: false,
+          error: 'Η ημ/νία έναρξης πρέπει να είναι μικρότερη από την σημερινή'
+        }
+      }
+
+      return {
+        valid: true,
+        error: null
+      }
+    }
 
     validateEndDate(value) {
       const startDate = moment(_.get(this.state, 'startDate', '')).unix()
