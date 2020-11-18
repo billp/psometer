@@ -21,7 +21,7 @@ export function allStatuses(name, iconSize = 200) {
     },
     {
       maxProgress: 0.6,
-      text: name + " εχεις αρχίσει να μαθαίνεις από τα λάθη σου και να έχεις μεγαλύτερη εμπιστοσύνη στον εαυτό σου. Τα εποικοινωνιακά σου skills έχουν αρχίσει να βελτιόνονται.",
+      text: name + " εχεις αρχίσει να μαθαίνεις από τα λάθη σου και να έχεις μεγαλύτερη εμπιστοσύνη στον εαυτό σου. Τα εποικοινωνιακά σου skills έχουν αρχίσει να βελτιώνονται.",
       status: "Noob level 3",
       icon: <Status3 className={styles.avatar} width={`${iconSize}px`} height={`${iconSize}px`} />
     },
