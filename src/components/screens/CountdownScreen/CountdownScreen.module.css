@@ -1,22 +1,46 @@
 .form {
-    width: 350px;
-    margin: 0 auto;
-    margin-top: 5vh;
-    font-family: Manrope, serif;
+  width: 350px;
+  margin: 0 auto;
+  margin-top: 5vh;
+  font-family: Manrope, serif;
 }
 
 .welcome-text {
-    margin-top:6vh;
-    font-family: Manrope, serif;
+  margin-top:6vh;
+  font-family: Manrope, serif;
 }
 
 .settings-icon {
-    fill: #dadada;
+  fill: #dadada;
+}
+
+.down-icon {
+  fill: #dadada;
+  position: relative;
+  top: -5px;
+  padding-right: 5px;
 }
 
 .menu-bar {
   text-align: right;
   width: 90%;
+}
+
+.menu-bar ul li {
+  display: inline;
+  margin-right: 5px;
+}
+
+.menu-bar ul li:after {
+  content: "|";
+  position: relative;
+  top: -9px;
+  font-size: 1.2em;
+  margin-left: 5px;
+  color: #999999;
+}
+.menu-bar ul li:last-child:after {
+  display: none;
 }
 
 .animated-button-left, .animated-button-right {
@@ -29,6 +53,7 @@
 
 .main {
   margin: 0 auto;
+  padding: 40px 0px;
 }
 
 .progress-view {

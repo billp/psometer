@@ -6,27 +6,46 @@ import { updateCountdownParams, updateConfigurationInitialSetupCompleted } from 
 import { withRouter } from "react-router-dom"
 import { compose } from 'redux'
 import { ReactComponent as SettingsIcon } from '../../../images/settings-icon.svg'
+import { ReactComponent as DownArrow } from '../../../images/down-arrow.svg'
 import { CountdownView } from '../../../components/CountdownView/CountdownView'
 import { ProgressView } from '../../../components/ProgressView/ProgressView'
 import moment from 'moment'
 import _ from 'lodash'
 import { speakName } from '../../../utils/langUtils'
 import { allStatuses } from './CountdownStatuses'
+import html2canvas from 'html2canvas';
 
 class CountdownScreen extends React.Component {
   state = {
     progress: 0
+  }
+
+  constructor(props) {
+    super(props)
+
+    this.main = React.createRef()
   }
   
   render() {
     return (
         <SimpleLayout>
           <div className={styles['menu-bar']}>
-            <a href="#settings" onClick={this.settingsAction.bind(this)}>
-              <SettingsIcon width="30px" height="30px" className={styles['settings-icon']} />
-            </a>
+            <ul>
+              <li>
+                <a href="#capture" onClick={this.captureAction.bind(this)}>
+                  <DownArrow width="20px" height="20px" className={styles['down-icon']} />
+                </a>
+              </li>
+              <li>
+                <a href="#settings" onClick={this.settingsAction.bind(this)}>
+                  <SettingsIcon width="30px" height="30px" className={styles['settings-icon']} />
+                </a>
+              </li>
+            </ul>
           </div>
-          <div className={styles['main']}>
+          <div ref={this.main} 
+            id="cd-main"
+            className={styles['main']}>
             <div className={styles['avatar']}>
               {this.currentStatus('icon', 100)}
               <div className={styles['status']}>
@@ -57,6 +76,21 @@ class CountdownScreen extends React.Component {
   settingsAction(e) {
     e.preventDefault()
     this.props.history.push("/settings");
+  }
+
+  captureAction(e) {
+    e.preventDefault()
+    html2canvas(this.main.current, { 
+      backgroundColor: "#005F40", 
+      scale: 0.8
+    }).then(((canvas) => {
+      canvas.toBlob((blob) => {
+        let link = document.createElement('a')
+        link.href = URL.createObjectURL(blob)
+        link.setAttribute('download', `progress.${this.state.progress}.png`);
+        link.click();
+      },'image/png')
+    }).bind(this))
   }
 
   currentStatus(key) {
