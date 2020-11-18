@@ -90,7 +90,7 @@ class CountdownScreen extends React.Component {
         link.setAttribute('download', `progress.${this.state.progress}.png`);
         link.click();
       },'image/png')
-    }).bind(this))
+    }))
   }
 
   currentStatus(key) {
