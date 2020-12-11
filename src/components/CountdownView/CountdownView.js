@@ -1,6 +1,8 @@
 import * as React from "react";
 import './CountdownView.scss'
 import moment from 'moment'
+import ReactTooltip from "react-tooltip";
+import {calcWorkingDays} from "../../utils/DateUtils";
 
 export class CountdownView extends React.Component {
 
@@ -86,8 +88,17 @@ export class CountdownView extends React.Component {
         diff -= mins * (MIN_IN_SECONDS);
         const secs = Math.floor(diff);
 
+        // Try to calc working days for only new changed days
+        let workingDays;
+        if (this.state.days !== days) {
+            workingDays = calcWorkingDays(start, end);
+        } else {
+            workingDays = this.state.workingdays;
+        }
+
         this.setState({
             diff: diff,
+            workingdays: workingDays + " εργάσιμες",
             days: this.formatDatePart('D', days),
             hours: this.formatDatePart('H', hours),
             mins: this.formatDatePart('M', mins),
@@ -115,7 +126,7 @@ export class CountdownView extends React.Component {
       setInterval(() => {
         this.notifyForUpdate()
       }, 1000)
-      
+
       this.notifyForUpdate()
     }
 
@@ -133,10 +144,11 @@ export class CountdownView extends React.Component {
       if (this.state.diff > 0) {
         text =
           <span className={'countdown-view'}>
-              Ελευθέρωση σε <span class="days-component">{this.state.days}</span>&nbsp;
-                            <span class="hours-component">{this.state.hours}</span>&nbsp;
-                            <span class="minutes-component">{this.state.mins}</span>&nbsp;
-                            <span class="seconds-component">{this.state.secs}</span>
+              Ελευθέρωση σε <a className="days-component" data-tip={this.state.workingdays}>{this.state.days}</a>&nbsp;
+                            <ReactTooltip className="days-tooltip-component" place="bottom" type="light" effect="solid"  />
+                            <span className="hours-component">{this.state.hours}</span>&nbsp;
+                            <span className="minutes-component">{this.state.mins}</span>&nbsp;
+                            <span className="seconds-component">{this.state.secs}</span>
           </span>
       }
 
