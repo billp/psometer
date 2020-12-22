@@ -4,9 +4,9 @@ import { AnimatedButton } from '../../../AnimatedButton/AnimatedButton'
 import styles from './SetParameters.module.css'
 import { ReactComponent as TopIcon } from '../../../../images/settings-icon.svg'
 import { connect } from 'react-redux'
-import { updateCountdownParams, 
-         updateConfigurationInitialSetupCompleted, 
-         updateName, 
+import { updateCountdownParams,
+         updateConfigurationInitialSetupCompleted,
+         updateName,
          clearAllSettings,
          validateFields } from '../../../../actions'
 import { withRouter } from "react-router-dom"
@@ -42,13 +42,13 @@ class SetParameters extends React.Component {
               <Form className={styles.form}>
                 {this.props.showAll ?
                   <TextField
-                      name="name" 
+                      name="name"
                       label="Όνομα"
                       value={this.state.name}
                       onChange={e => this.setState({name: e.target.value})}
                   /> : ''
                 }
-                <PSDatePicker 
+                <PSDatePicker
                   value={Date.parse(this.state.startDate)}
                   onChange={date => this.setState({ startDate: date }, () => { 
                       if (!_.isNil(this.state.endDate)) {
@@ -58,17 +58,17 @@ class SetParameters extends React.Component {
                   }
                   customValidation={this.validateStartDate.bind(this)}
                   label="Ημερομηνία έναρξης Production Support"
-                  name="start-date" 
+                  name="start-date"
                 />
-                <PSDatePicker 
+                <PSDatePicker
                   value={Date.parse(this.state.endDate)}
                   onChange={date => this.setState({ endDate: date })}
                   label="Ημερομηνία λήξης Production Support"
                   name="end-date"
                   customValidation={this.validateEndDate.bind(this)}
                 />
-                { this.props.showAll ? 
-                  this.allParamsButtons() : 
+                { this.props.showAll ?
+                  this.allParamsButtons() :
                   this.initParamsButtons() }
               </Form>
           </SimpleLayout>
@@ -78,10 +78,10 @@ class SetParameters extends React.Component {
     allParamsButtons() {
       return (
         <div>
-          <AnimatedButton 
+          <AnimatedButton
             className={styles['animated-button-left']}
             onClick={this.removeAllSettings.bind(this)}>Διαγραφή δεδομένων</AnimatedButton>
-          <AnimatedButton 
+          <AnimatedButton
             className={styles['animated-button-right']}
             onClick={this.saveAll.bind(this)}
             isDisabled={!this.isFormValid()}>Αποθήκευση</AnimatedButton>
@@ -92,10 +92,10 @@ class SetParameters extends React.Component {
     initParamsButtons() {
       return (
         <div>
-          <AnimatedButton 
+          <AnimatedButton
             className={styles['animated-button-left']}
             onClick={this.goBack.bind(this)}>← Πίσω</AnimatedButton>
-          <AnimatedButton 
+          <AnimatedButton
             className={styles['animated-button-right']}
             onClick={this.saveAll.bind(this)}
             isDisabled={!this.isFormValid()}>Συνέχεια →</AnimatedButton>
@@ -162,7 +162,7 @@ class SetParameters extends React.Component {
         if (this.isFormValid()) {
           this.props.updateCountdownParams(this.state.startDate, this.state.endDate)
           this.props.updateConfigurationInitialSetupCompleted(true)
-          this.props.updateName(this.state.name)    
+          this.props.updateName(this.state.name)
           this.props.history.push("/")
         }
       })
@@ -171,15 +171,15 @@ class SetParameters extends React.Component {
     componentDidMount() {
       this.setState({
         name: this.props.user.name,
-        startDate: this.props.parameters.startDate, 
+        startDate: this.props.parameters.startDate,
         endDate: this.props.parameters.endDate
       })
     }
 
     isFormValid() {
-      return _.keys(this.props.validationErrors).length === 0 && 
-        !_.isNil(this.state.startDate) && 
-        !_.isNil(this.state.endDate) && 
+      return _.keys(this.props.validationErrors).length === 0 &&
+        !_.isNil(this.state.startDate) &&
+        !_.isNil(this.state.endDate) &&
         !_.isNil(this.state.name)
     }
 }

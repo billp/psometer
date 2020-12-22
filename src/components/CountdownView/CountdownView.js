@@ -9,7 +9,7 @@ export class CountdownView extends React.Component {
     constructor(props) {
         super(props);
 
-        this.startTime = this.getNowTime()/1000 - moment(props.start).unix();
+        this.startTime = this.getNowTime() - moment(props.start).unix();
 
         // Init state with empty values
         this.state = {
@@ -21,12 +21,22 @@ export class CountdownView extends React.Component {
         };
     }
 
+    getEndTime() {
+      // Add hours to correct the end of working day (18:00)
+      return this.props.end + 18 * 60 * 60
+    }
+
+    getStartTime() {
+      // Add hours to correct the start of working day (09:30)
+      return this.props.start + 9.5 * 60 * 60
+    }
+
     /**
      * Return now date as millis
      * @returns {number}
      */
     getNowTime() {
-        return (new Date()).getTime();
+        return moment().unix();
     }
 
     /**
@@ -73,6 +83,19 @@ export class CountdownView extends React.Component {
      * @param end
      */
     calcDiff(start, end) {
+        if (this.getNowTime() > end ||
+            this.getStartTime() > this.getEndTime() ||
+            this.getNowTime() < this.getStartTime()) {
+          this.setState({
+              diff: 0,
+              days: '',
+              hours: '',
+              mins: '',
+              secs: ''
+          })
+          return
+        }
+
         const DAY_IN_SECONDS = 24 * 60 * 60;
         const HOUR_IN_SECONDS = 60 * 60;
         const MIN_IN_SECONDS = 60;
@@ -110,13 +133,19 @@ export class CountdownView extends React.Component {
      * Update the date based on now time
      */
     updateDate() {
-        let playTime = this.getNowTime()/1000 - this.startTime;
-        this.calcDiff(this.startTime + playTime, this.props.end);
+        let playTime = this.getNowTime() - this.startTime;
+        this.calcDiff(this.startTime + playTime, this.getEndTime());
     }
 
     calculateProgress() {
-      const now = moment().unix()
-      const progress = (now-this.props.start)/(this.props.end-this.props.start)
+      const now = this.getNowTime()
+      if (now > this.getEndTime()) {
+        return 1
+      }
+      if (now < this.getStartTime()) {
+        return 0
+      }
+      const progress = (now-this.getStartTime())/(this.getEndTime()-this.getStartTime())
       return progress
     }
 
@@ -140,21 +169,26 @@ export class CountdownView extends React.Component {
     }
 
     render() {
-      let text = '';
-      if (this.state.diff > 0) {
-        text =
-          <span className={'countdown-view'}>
-              Ελευθέρωση σε <a className="days-component" data-tip={this.state.workingdays}>{this.state.days}</a>&nbsp;
-                            <ReactTooltip className="days-tooltip-component" place="bottom" type="light" effect="solid"  />
-                            <span className="hours-component">{this.state.hours}</span>&nbsp;
-                            <span className="minutes-component">{this.state.mins}</span>&nbsp;
-                            <span className="seconds-component">{this.state.secs}</span>
-          </span>
-      }
-
       return (
         <div className={this.props.className}>
-            {text}
+          <span className={'countdown-view'}>
+              <ul>
+              <li>Ελευθέρωση σε</li>
+              {this.state.workingdays ?
+                <li>
+                  <a href="#working_day"
+                    onClick={e => e.preventDefault()}
+                    className="days-component"
+                    data-tip={this.state.workingdays}>{this.state.days}</a>
+                    <ReactTooltip className="days-tooltip-component" place="bottom" type="light" effect="solid"  />
+                </li> : ''}
+
+              {this.state.hours ? <li><span className="hours-component">{this.state.hours}</span></li> : ''}
+              {this.state.mins ? <li><span className="minutes-component">{this.state.mins}</span></li> : ''}
+              {this.state.secs ? <li><span className="seconds-component">{this.state.secs}</span></li> : ''}
+
+              </ul>
+          </span>
         </div>
       )
     }

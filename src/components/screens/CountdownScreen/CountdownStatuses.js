@@ -4,6 +4,8 @@ import { ReactComponent as Status2 } from '../../../images/statuses/2.svg'
 import { ReactComponent as Status3 } from '../../../images/statuses/3.svg'
 import { ReactComponent as Status4 } from '../../../images/statuses/4.svg'
 import { ReactComponent as Status5 } from '../../../images/statuses/5.svg'
+import { ReactComponent as Status6 } from '../../../images/statuses/6.svg'
+
 import styles from './CountdownScreen.module.css'
 
 export function allStatuses(name, iconSize = 200) {
@@ -36,5 +38,11 @@ export function allStatuses(name, iconSize = 200) {
       text: name + " έχεις μάθει όλες τις διαδικασίες του PS και είσαι έτοιμος/η να μεταλαμπαδεύσεις τις γνώσεις σου στον επόμενο τυχερό/η. Ετοιμάζεσαι να επιστρέψεις στην ηρεμία και την ασφάλεια της implementation ομάδας σου.",
       status: "Pro",
       icon: <Status5 className={styles.avatar} width={`${iconSize}px`} height={`${iconSize}px`} />
+    },
+    {
+      maxProgress: 1.01,
+      text: name + " το ταξίδι σου εδώ τελείωσε, έχεις αντέξει τα χειρότερα και απέδειξες στον εαυτό σου ότι μπορείς να ανταπεξέλθεις στις δυσκολίες του PS. Μπορεί να νιώθεις μία μελαγχολία τώρα που φεύγεις, το οποίο είναι φυσιολογικό, να ξέρεις όμως ότι έχεις βάλει κι εσύ το λιθαράκι σου για να βελτιώσεις την χαοτική αυτή κατάσταση. Συγχαρητήρια λοιπόν, και προετοιμάσου για την επόμενη δοκιμασία που θα έρθει και θα σε εξελίξει ακόμα περισσότερο. Αν σου άρεσε το PSόμετρο, μπορείς να το προτείνεις στον αντικαταστάτη σου :).",
+      status: " Έφευγες;",
+      icon: <Status6 className={styles.avatar} width={`${iconSize}px`} height={`${iconSize}px`} />
     }]
 }
