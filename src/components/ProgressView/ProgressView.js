@@ -10,14 +10,11 @@ export class ProgressView extends React.Component {
     this.progressLabel = createRef(null)
   }
 
-  componentDidMount() {
-    console.log(this.progressView)
-  }
 
   render() {
     return (
       <div className={'progressview-wrapper' + (this.props.className ? ' ' + this.props.className : '')}>
-          <span className={'progressview-label'} 
+          <span className={'progressview-label'}
               ref={this.progressLabel}
               style={{left: this.translateWidth(this.props.currentValue) + 'px'}}>
                 {this.props.valueFormatter(this.props.currentValue)}
