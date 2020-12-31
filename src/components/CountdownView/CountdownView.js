@@ -169,6 +169,10 @@ export class CountdownView extends React.Component {
     }
 
     render() {
+      if (this.calculateProgress() >= 1) {
+        return <div></div>;
+      }
+
       return (
         <div className={this.props.className}>
           <span className={'countdown-view'}>
